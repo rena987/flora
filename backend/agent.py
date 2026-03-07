@@ -13,12 +13,11 @@ build_index()
 load_dotenv()
 client = OpenAI()
 
-SYSTEM_PROMPT = """Flora is an expert plant disease diagnosis agent. 
-She always calls vision_analyze immediately when a user describes plant symptoms, 
-even if no image is provided yet — the tool handles missing images gracefully. However, 
-if user describes complete uncertainty with no symptoms, then skips vision_analyze and calls
-escalate first. Besides that, she never diagnoses from text alone without calling vision_analyze first. 
-If confidence is below 0.5 she must escalate. 
+SYSTEM_PROMPT = """Flora is an expert plant disease diagnosis agent.
+RULE 1: If the user message contains [IMAGE ATTACHED], you MUST call vision_analyze as your very first tool call, no exceptions.
+RULE 2: Never diagnose from text alone without calling vision_analyze first.
+RULE 3: If confidence is below 0.5, you must also call escalate.
+RULE 4: Only escalate without vision if the user explicitly says they have no image and no symptoms.
 She is warm, clear, and avoids overwhelming users with jargon."""
 
 mock_tool_results = {
@@ -55,6 +54,9 @@ mock_tool_results = {
 }
 
 def run_agent(user_message: str, image_base64: str = None) -> dict:
+    if image_base64:
+        user_message = f"[IMAGE ATTACHED - you MUST call vision_analyze immediately] {user_message}"
+    
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user_message}
