@@ -1,0 +1,16 @@
+Disease: Powdery Mildew
+
+Affects: Wide range of plants (Squash, Cucumber, Tomato, Rose)
+
+Symptoms: White, flour-like circular spots on leaves, stems, and sometimes fruit. Infected leaves may yellow, curl, or become distorted. Photosynthesis is impaired, leading to reduced yields.
+
+Causes: Various fungi (e.g., Erysiphe, Podosphaera). Unlike most fungi, it thrives in warm, dry climates with high relative humidity at night.
+
+Treatment:
+Apply sulfur-based fungicides or potassium bicarbonate
+Use neem oil or horticultural oils for organic control
+Milk-water sprays (40/60 ratio) can be effective in bright sunlight
+
+Prevention: Choose resistant varieties. Plant in full sun. Improve air circulation. Avoid excessive nitrogen fertilization which creates succulent, susceptible growth.
+
+Severity: LOW to MODERATE — usually manageable but can weaken plants over time.

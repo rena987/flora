@@ -1,0 +1,17 @@
+Disease: Tomato Late Blight
+
+Affects: Tomato, Potato, Petunia
+
+Symptoms: Water-soaked, dark green to lead-gray spots on leaves that expand rapidly into large brown lesions. White, fuzzy fungal growth often appears on the undersides of leaves in humid conditions. Stems develop dark brown streaks.
+
+Causes: Oomycete pathogen Phytophthora infestans. Spreads rapidly through wind-borne sporangia. Favored by cool, moist nights (10-15°C) and moderate day temperatures (15-21°C).
+
+Treatment:
+Prune and destroy infected plants immediately; do not compost
+Apply fungicides containing chlorothalonil, mancozeb, or fixed copper
+Use biofungicides containing Bacillus subtilis for organic control
+Ensure foliage stays dry by improving ventilation
+
+Prevention: Plant resistant varieties. Avoid planting tomatoes near potatoes. Destroy volunteer plants and cull piles. Use drip irrigation.
+
+Severity: CRITICAL — can destroy an entire crop within days under favorable conditions.

@@ -1,0 +1,16 @@
+Disease: Potato Late Blight
+
+Affects: Potato, Tomato
+
+Symptoms: Large, irregular, water-soaked lesions on leaves and stems. In moist weather, white fungal growth appears on leaf undersides. Tubers develop a dry, reddish-brown rot that extends into the flesh.
+
+Causes: Oomycete Phytophthora infestans. Spreads via wind-borne spores. Thrives in cool, wet weather.
+
+Treatment:
+Kill vines immediately if infection is found to protect tubers
+Apply systemic fungicides like metalaxyl or protective fungicides like copper
+Remove and destroy infected tubers to prevent spread in storage
+
+Prevention: Plant resistant varieties. Use certified seed. Eliminate "volunteer" potatoes and cull piles. Monitor weather conditions for "blight cast" warnings.
+
+Severity: CRITICAL — historically the cause of the Irish Potato Famine; can destroy crops rapidly.

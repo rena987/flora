@@ -1,0 +1,16 @@
+Disease: Tomato Target Spot
+
+Affects: Tomato, Pepper, Papaya
+
+Symptoms: Small, brown, water-soaked spots on leaves that expand and develop a "target" appearance with concentric rings. Unlike Early Blight, these spots are often more numerous and smaller. Fruit shows sunken, brown, circular lesions.
+
+Causes: Fungus Corynespora cassiicola. Spreads by wind and splashing water. Favored by high humidity and long periods of leaf wetness.
+
+Treatment:
+Apply fungicides containing azoxystrobin or chlorothalonil
+Prune lower branches to improve airflow
+Maintain consistent soil moisture
+
+Prevention: Use 3-year crop rotation. Remove crop residues immediately after harvest. Avoid overhead irrigation.
+
+Severity: MODERATE to HIGH — can cause significant defoliation in warm, humid regions.

@@ -1,0 +1,16 @@
+Disease: Nutrient Deficiency (General)
+
+Affects: All plants
+
+Symptoms: General yellowing (Nitrogen), purpling of lower leaves (Phosphorus), or yellowing of leaf edges (Potassium). Interveinal chlorosis (green veins, yellow tissue) often indicates Iron or Magnesium deficiency.
+
+Causes: Lack of specific minerals in the soil, improper soil pH (which "locks" nutrients), or damaged root systems unable to take up nutrients.
+
+Treatment:
+Conduct a soil test to identify specific missing nutrients
+Apply balanced fertilizer or specific amendments (e.g., chelated iron)
+Adjust soil pH to the appropriate range for the specific plant
+
+Prevention: Regularly add compost or organic matter to the soil. Use slow-release fertilizers. Maintain consistent watering to allow nutrient transport.
+
+Severity: VARIABLE — can range from minor growth slowing to plant death depending on the specific nutrient missing.

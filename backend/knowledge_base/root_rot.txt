@@ -1,0 +1,17 @@
+Disease: Root Rot
+
+Affects: Nearly all plants, especially in poorly drained soil
+
+Symptoms: Stunted growth, yellowing leaves, and wilting despite wet soil. Roots appear brown, black, or mushy and may have a foul odor. The outer "skin" of the root may easily slough off.
+
+Causes: Pathogenic water molds (Phytophthora, Pythium) or fungi (Rhizoctonia, Fusarium). Favored by overwatering and poorly drained, compacted soil.
+
+Treatment:
+Improve soil drainage immediately
+Reduce watering frequency
+Apply soil drench fungicides (like mefenoxam) for high-value plants
+If severe, remove the plant and solarize the soil
+
+Prevention: Do not overwater. Use well-draining soil or raised beds. Clean containers thoroughly before reusing. Ensure pots have drainage holes.
+
+Severity: HIGH — often fatal once symptoms are visible above ground.

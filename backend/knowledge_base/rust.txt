@@ -1,0 +1,16 @@
+Disease: Rust
+
+Affects: Grains, Beans, Roses, Garlic, Corn
+
+Symptoms: Small, raised, orange, yellow, or reddish-brown pustules on leaf undersides. Powdery spores rub off easily on fingers. Leaves may eventually turn yellow and drop.
+
+Causes: Various fungi in the order Pucciniales. Spreads via wind-borne spores. Requires moisture on leaf surfaces to germinate.
+
+Treatment:
+Prune and destroy infected leaves
+Apply fungicides containing sulfur, copper, or myclobutanil
+Clean tools thoroughly between plants
+
+Prevention: Avoid overhead watering. Space plants for good airflow. Remove alternative host plants (some rusts require two different plant species to complete their life cycle).
+
+Severity: MODERATE — can reduce vigor and yield but rarely kills the entire plant immediately.

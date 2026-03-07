@@ -1,0 +1,16 @@
+Disease: Tomato Bacterial Spot
+
+Affects: Tomato, Pepper
+
+Symptoms: Small, water-soaked, greasy-looking spots on leaves that turn brown and necrotic. Fruit develops small, raised, scab-like lesions (2-3mm) that may have a yellowish halo.
+
+Causes: Bacteria in the genus Xanthomonas. Spread by rain splash and contaminated seeds. Favored by high humidity and warm temperatures with heavy rainfall.
+
+Treatment:
+Apply copper-based bactericides combined with mancozeb
+Remove and destroy infected plant parts
+Avoid working in the garden when plants are wet
+
+Prevention: Use certified pathogen-free seeds and transplants. Practice a 2-year crop rotation. Use mulch to reduce soil splashing. Avoid overhead watering.
+
+Severity: HIGH — severely impacts fruit marketability and plant vigor in warm, wet climates.

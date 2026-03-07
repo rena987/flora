@@ -1,0 +1,16 @@
+Disease: Potato Early Blight
+
+Affects: Potato, Tomato, Eggplant
+
+Symptoms: Small, dark, dry papery spots on older leaves. As spots enlarge, they show characteristic concentric "bullseye" rings. Tubers may develop dark, sunken, circular lesions with corky tissue underneath.
+
+Causes: Fungus Alternaria solani. Spreads via wind and water splash. Favored by alternating wet and dry periods.
+
+Treatment:
+Apply fungicides (chlorothalonil, mancozeb, or azoxystrobin)
+Ensure plants have adequate nitrogen and potassium to maintain vigor
+Harvest tubers only when vines are completely dead to reduce skin damage
+
+Prevention: Practice 3-year crop rotation. Use certified disease-free seed tubers. Avoid overhead irrigation. Control volunteer potato plants.
+
+Severity: MODERATE to HIGH — reduces tuber size and storage life.

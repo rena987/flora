@@ -1,0 +1,16 @@
+Disease: Tomato Yellow Leaf Curl Virus (TYLCV)
+
+Affects: Tomato, Pepper, Tobacco, Weeds
+
+Symptoms: Severe stunting of the plant. New leaves are significantly smaller, yellow (chlorotic), and curled upward/inward. Flowers may drop before fruit sets.
+
+Causes: Begomovirus transmitted exclusively by the silverleaf whitefly (Bemisia tabaci). Not spread by touch or seeds.
+
+Treatment:
+No cure for the virus; infected plants must be removed and destroyed immediately
+Control whitefly populations using insecticidal soaps or neem oil
+Use reflective mulches to deter whiteflies
+
+Prevention: Plant TYLCV-resistant varieties. Use fine mesh row covers to exclude whiteflies. Remove host weeds from the vicinity.
+
+Severity: CRITICAL — can result in 100% yield loss if plants are infected at an early stage.

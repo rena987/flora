@@ -1,0 +1,16 @@
+Disease: Downy Mildew
+
+Affects: Grapes, Cucurbits, Brassicas, Spinach
+
+Symptoms: Angular, pale yellow spots on the upper leaf surface, often bounded by leaf veins. A fuzzy, gray-to-purple mold appears on the underside of the spots during humid weather.
+
+Causes: Oomycetes (e.g., Peronospora, Pseudoperonospora). Spreads via wind and water. Requires free water on leaves for infection.
+
+Treatment:
+Apply copper-based fungicides or mancozeb
+Use systemic fungicides like phosphorous acid (phosphonate)
+Remove infected plant debris immediately
+
+Prevention: Ensure wide plant spacing. Use drip irrigation. Select resistant cultivars. Water early in the day so foliage dries quickly.
+
+Severity: HIGH — spreads rapidly in wet conditions and can cause total crop failure.

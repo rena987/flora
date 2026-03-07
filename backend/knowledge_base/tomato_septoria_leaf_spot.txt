@@ -1,0 +1,17 @@
+Disease: Tomato Septoria Leaf Spot
+
+Affects: Tomato and other Solanaceous plants
+
+Symptoms: Small, circular spots (3-5mm) with dark brown borders and tan or gray centers. Tiny black specks (pycnidia) appear in the centers of spots. Starts on lower leaves and progresses upward.
+
+Causes: Fungus Septoria lycopersici. Overwinters on plant debris and weeds. Spreads via splashing water, insects, and handling wet plants.
+
+Treatment:
+Remove infected lower leaves to reduce inoculum
+Apply fungicides such as chlorothalonil, mancozeb, or copper-based products
+Improve air circulation through staking and pruning
+Keep foliage dry
+
+Prevention: Control solanaceous weeds (like nightshade). Rotate crops on a 3-year cycle. Thoroughly clean garden tools after use.
+
+Severity: MODERATE to HIGH — reduces fruit quality and yield through heavy defoliation.

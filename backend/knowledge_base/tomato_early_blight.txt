@@ -1,0 +1,18 @@
+Disease: Tomato Early Blight
+
+Affects: Tomato, Potato, Eggplant
+
+Symptoms: Dark brown to black lesions with concentric rings forming a bullseye pattern. Lesions typically appear on older lower leaves first. Surrounding tissue turns yellow. Severely affected leaves drop prematurely.
+
+Causes: Fungal pathogen Alternaria solani. Spreads via wind and water splash. Favored by warm temperatures (24-29°C), high humidity, and wet foliage.
+
+Treatment:
+Remove and destroy all affected leaves immediately
+Apply copper-based fungicide (copper hydroxide or copper sulfate) every 7-10 days
+Alternatively use chlorothalonil or mancozeb fungicides
+Avoid overhead irrigation — water at base of plant
+Apply mulch to prevent soil splash onto lower leaves
+
+Prevention: Rotate crops every 2-3 years. Use certified disease-free seed. Space plants adequately for airflow. Remove plant debris after harvest.
+
+Severity: HIGH — can cause significant defoliation and yield loss if untreated. Act within 48 hours of first symptoms.

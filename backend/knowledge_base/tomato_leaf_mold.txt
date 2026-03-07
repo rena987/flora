@@ -1,0 +1,16 @@
+Disease: Tomato Leaf Mold
+
+Affects: Tomato (primarily in greenhouses)
+
+Symptoms: Pale green or yellow spots on the upper surface of older leaves. The undersides of these spots develop an olive-green to brown velvety mold (spores). Leaves eventually turn brown and die.
+
+Causes: Fungus Passalora fulva. Spreads by wind and splashing water. Thrives in high humidity (>85%) and temperatures between 21-24°C.
+
+Treatment:
+Increase ventilation and air movement around plants
+Apply fungicides like chlorothalonil or copper-based sprays
+Remove and destroy heavily infected lower foliage
+
+Prevention: Use resistant cultivars. Maintain humidity below 85% in greenhouses. Space plants widely. Avoid wetting leaves during irrigation.
+
+Severity: MODERATE — primarily a concern in high-humidity environments or greenhouses.
