@@ -33,7 +33,7 @@ export default function App() {
     setLoading(true)
 
     try {
-      const response = await axios.post("http://localhost:8000/chat", {
+      const response = await axios.post("https://flora-production-90a7.up.railway.app/chat", {
         message: input,
         image_base64: image
       })

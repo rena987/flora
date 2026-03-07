@@ -8,7 +8,7 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=["*"],
     allow_methods=["*"],
     allow_headers=["*"]
 )
@@ -21,4 +21,3 @@ class ChatRequest(BaseModel):
 async def chat(request: ChatRequest):
     result = run_agent(request.message, request.image_base64)
     return result 
-
