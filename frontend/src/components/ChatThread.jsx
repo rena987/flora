@@ -1,3 +1,5 @@
+import ReactMarkdown from 'react-markdown'
+
 export default function ChatThread({ messages, loading }) {
   return (
     <div className="chat-thread">
@@ -29,7 +31,7 @@ export default function ChatThread({ messages, loading }) {
             />
           )}
           <div className="message-bubble">
-            {msg.content}
+            <ReactMarkdown>{msg.content}</ReactMarkdown>
           </div>
         </div>
       ))}
