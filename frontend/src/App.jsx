@@ -25,7 +25,7 @@ export default function App() {
   }
 
   const sendMessage = async () => {
-    if (!input.trim()) return
+    if (!input.trim() && !image) return
 
     const userMsg = { role: "user", content: input, image }
     setMessages(prev => [...prev, userMsg])
@@ -91,7 +91,7 @@ export default function App() {
             <button
               className="send-btn"
               onClick={sendMessage}
-              disabled={loading || !input.trim()}
+              disabled={loading || (!input.trim() && !image)}
             >
               →
             </button>
