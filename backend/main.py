@@ -14,7 +14,7 @@ app.add_middleware(
 )
 
 class ChatRequest(BaseModel):
-    message: str 
+    message: str = "I have uploaded a plant image. Please analyze it using vision_analyze to diagnose any diseases."
     image_base64: Optional[str] = None 
 
 @app.post("/chat")
