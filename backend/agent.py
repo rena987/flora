@@ -3,6 +3,10 @@ from tools import schemas
 from dotenv import load_dotenv
 import json
 import base64
+import uuid 
+import time 
+from datetime import datetime, timezone
+from pathlib import Path
 
 from tools.vision import analyze_image 
 from tools.rag import build_index, retrieve
@@ -54,6 +58,7 @@ mock_tool_results = {
 }
 
 def run_agent(user_message: str, image_base64: str = None) -> dict:
+    original_message = user_message 
     if image_base64:
         user_message = f"[IMAGE ATTACHED - you MUST call vision_analyze immediately] {user_message}"
     
@@ -61,10 +66,14 @@ def run_agent(user_message: str, image_base64: str = None) -> dict:
         {"role": "system", "content": SYSTEM_PROMPT},
         {"role": "user", "content": user_message}
     ]
-    tool_summary = {
-        "tools_called": [],
-        "vision_result": None, 
-        "severity_result": None
+    trace = {
+        "request_id": str(uuid.uuid4()),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "image_present": image_base64 is not None,
+        "user_message": original_message,
+        "steps": [],
+        "supervisor": None,
+        "total_latency_ms": 0
     }
 
     while True:
@@ -77,27 +86,32 @@ def run_agent(user_message: str, image_base64: str = None) -> dict:
         
         if not response.choices[0].message.tool_calls:
             final_response = response.choices[0].message.content
+            trace["supervisor"] = review_response(final_response, trace)
+            trace["total_latency_ms"] = sum(s["latency_ms"] for s in trace["steps"])
+            traces_dir = Path("traces")
+            traces_dir.mkdir(exist_ok=True)
+            (traces_dir / f"{trace['request_id']}.json").write_text(json.dumps(trace, indent=2))
             return {
                 "response": final_response,
-                "vision_result": tool_summary["vision_result"],
-                "severity_result": tool_summary["severity_result"],
-                "tools_called": tool_summary["tools_called"],
-                "supervisor": review_response(final_response, tool_summary)
+                "vision_result": next((s["output"] for s in trace["steps"] if s["tool"] == "vision_analyze"), None),
+                "severity_result": next((s["output"] for s in trace["steps"] if s["tool"] == "severity_assess"), None),
+                "tools_called": [s["tool"] for s in trace["steps"]],
+                "supervisor": trace["supervisor"],
+                "trace": trace
             }
 
         all_tool_calls = response.choices[0].message.tool_calls
         messages.append(response.choices[0].message)
         for tool_call in all_tool_calls: 
             tool_name = tool_call.function.name
-            tool_summary["tools_called"].append(tool_name)
             tool_args = json.loads(tool_call.function.arguments)
+            start = time.perf_counter()
 
             if tool_name == "vision_analyze":
                 tool_result = analyze_image(
                     image_base64 or "",
                     tool_args.get("user_description", "")
                 )
-                tool_summary["vision_result"] = tool_result
             elif tool_name == "rag_lookup":
                 tool_result = retrieve(
                     tool_args.get("disease_name", ""),
@@ -109,9 +123,17 @@ def run_agent(user_message: str, image_base64: str = None) -> dict:
                     tool_args.get("confidence_score", 0.0),
                     tool_args.get("symptoms", [])
                 )
-                tool_summary["severity_result"] = tool_result
             else:
                 tool_result = mock_tool_results[tool_name]
+
+            latency_ms = round((time.perf_counter() - start) * 1000)
+            trace["steps"].append({
+                "tool": tool_name,
+                "inputs": tool_args,
+                "output": tool_result,
+                "latency_ms": latency_ms,
+                "status": "success"
+            })
 
             messages.append({
                 "role": "tool",
