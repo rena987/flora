@@ -17,21 +17,7 @@ It is not a chatbot wrapper around GPT. The agent decides which tools to call, i
 
 ## Architecture
 
-```
-User (React + Vite)
-    ↓ image (base64) + message
-FastAPI backend
-    ↓
-Agent loop (gpt-4o, function calling)
-    ├── vision_analyze     → GPT-4V structured diagnosis
-    ├── rag_lookup         → FAISS retrieval from 15-doc knowledge base
-    ├── severity_assess    → Rule-based risk scoring
-    └── escalate           → Logs case for agronomist review
-    ↓
-Supervisor agent (second LLM call — QA reviewer persona)
-    ↓
-Response to frontend
-```
+![Flora architecture](docs/flora_architecture.svg)
 
 ### Why this architecture
 
