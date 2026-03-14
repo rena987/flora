@@ -80,8 +80,10 @@ GPT-4V hallucinates concentric rings on Bacterial Spot lesions. Both produce dar
 **2. Early Blight / Late Blight confusion on ambiguous images**  
 Lighting and image angle significantly affect whether GPT-4V distinguishes the two. Late Blight has a more irregular lesion pattern, but under overexposure both look similar. The supervisor catches some of these via the WRONG_SEVERITY check.
 
-**3. Non-plant images accepted**  
-The agent will attempt to diagnose a blurry photo, a rock, or an unrelated image. There is no image validation before the vision tool call. A pre-check tool (`validate_image`) would fix this and is the obvious next iteration.
+**3. Non-plant images - resolved**  
+Added `validate_image` pre-check tool that runs before `vision_analyze`.
+Rejects non-plant images in a single low-resolution GPT-4V call, preventing
+unnecessary downstream tool calls and hallucinated diagnoses.
 
 ---
 
