@@ -12,13 +12,15 @@ from tools.vision import analyze_image
 from tools.rag import build_index, retrieve
 from supervisor import review_response
 from tools.severity import assess_severity
+from tools.validate import validate_image
 
 build_index()
 load_dotenv()
 client = OpenAI()
 
 SYSTEM_PROMPT = """Flora is an expert plant disease diagnosis agent.
-RULE 1: If the user message contains [IMAGE ATTACHED], you MUST call vision_analyze as your very first tool call, no exceptions.
+RULE 0: If an image is attached, you MUST call validate_image before vision_analyze. If validate_image returns is_plant=false, explain politely that you can only diagnose plant diseases and stop
+RULE 1: After validate_image confirms is_plant=true, you MUST call vision_analyze next.
 RULE 2: Never diagnose from text alone without calling vision_analyze first.
 RULE 3: If confidence is below 0.5, you must also call escalate.
 RULE 4: Only escalate without vision if the user explicitly says they have no image and no symptoms.
@@ -107,7 +109,11 @@ def run_agent(user_message: str, image_base64: str = None) -> dict:
             tool_args = json.loads(tool_call.function.arguments)
             start = time.perf_counter()
 
-            if tool_name == "vision_analyze":
+            if tool_name == "validate_image":
+                tool_result = validate_image(
+                    image_base64 or ""
+                )
+            elif tool_name == "vision_analyze":
                 tool_result = analyze_image(
                     image_base64 or "",
                     tool_args.get("user_description", "")

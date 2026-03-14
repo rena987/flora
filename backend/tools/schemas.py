@@ -2,6 +2,25 @@ TOOLS = [
     {
         "type": "function",
         "function": {
+            "name": "validate_image",
+            "description": """ALWAYS call this first when a user inputs an image before you call vision_analyze.
+            if validate_image returns is_plant=False, explain politely that you can only diagnose plant diseases 
+            and stop.""",
+            "parameters": {
+                "type": "object",
+                "properties": {
+                    "image_base64": {
+                        "type": "string",
+                        "description": "encoded image"
+                    }
+                },
+                "required": ["image_base64"]
+            }
+        }
+    },
+    {
+        "type": "function",
+        "function": {
             "name": "vision_analyze",
             "description": """ALWAYS call this first when a user describes any plant symptoms or problems, 
             even without an image. skip if user already knows the plant's disease or problem. 
