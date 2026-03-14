@@ -43,7 +43,7 @@ export default function App() {
         content: response.data.response
       }
       setMessages(prev => [...prev, floraMsg])
-      setToolTrace(response.data.tools_called)
+      setToolTrace(response.data.trace.steps)
       setSupervisor(response.data.supervisor)
     } catch (err) {
       console.error(err)
@@ -98,7 +98,7 @@ export default function App() {
           </div>
         </div>
 
-        <ToolTrace toolsCalled={toolTrace} supervisor={supervisor} />
+        <ToolTrace steps={toolTrace} supervisor={supervisor} />
       </div>
     </div>
   )

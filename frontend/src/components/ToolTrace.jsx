@@ -1,4 +1,4 @@
-export default function ToolTrace({ toolsCalled, supervisor }) {
+export default function ToolTrace({ steps, supervisor }) {
   const toolConfig = {
     vision_analyze:  { icon: "🔍", label: "vision_analyze",  className: "vision",   status: "analyzed" },
     rag_lookup:      { icon: "📚", label: "rag_lookup",      className: "rag",      status: "retrieved" },
@@ -10,16 +10,17 @@ export default function ToolTrace({ toolsCalled, supervisor }) {
     <div className="trace-panel">
       <div className="trace-header">Tool Trace</div>
       <div className="trace-body">
-        {toolsCalled.length === 0 ? (
+        {steps.length === 0 ? (
           <p className="trace-empty">Tools will appear here after each response</p>
         ) : (
-          toolsCalled.map((tool, i) => {
-            const config = toolConfig[tool] || { icon: "🔧", label: tool, className: "rag", status: "called" }
+          steps.map((step, i) => {
+            const config = toolConfig[step.tool] || { icon: "🔧", label: step.tool, className: "rag", status: "called" }
             return (
               <div key={i} className={`trace-item ${config.className}`}>
                 <span className="trace-icon">{config.icon}</span>
                 <span className="trace-name">{config.label}</span>
                 <span className="trace-status">{config.status}</span>
+                <span className="trace-latency">{step.latency_ms}ms</span>
               </div>
             )
           })

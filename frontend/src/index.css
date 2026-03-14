@@ -325,6 +325,13 @@ body {
   font-weight: 500;
 }
 
+.trace-latency {
+  font-size: 11px; 
+  opacity: 0.8;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
 .trace-item.vision .trace-status { background: #2d4a2d; color: #7eb87e; }
 .trace-item.rag .trace-status { background: #2d3d4a; color: #7eaab8; }
 .trace-item.severity .trace-status { background: #4a3d2d; color: #b89a7e; }
