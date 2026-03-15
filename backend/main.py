@@ -32,6 +32,8 @@ async def chat(request: ChatRequest):
 
 async def generate(request: ChatRequest):
     history = request.history or []
+    print(f"DEBUG: history length = {len(history)}")
+    print(f"DEBUG: history = {history}")
     messages, trace = run_agent_tools(request.message, request.image_base64, history)
 
     clean_messages = []
