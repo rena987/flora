@@ -34,9 +34,16 @@ async def generate(request: ChatRequest):
     history = request.history or []
     messages, trace = run_agent_tools(request.message, request.image_base64, history)
 
+    clean_messages = []
+    for m in messages:
+        if isinstance(m, dict):
+            clean_messages.append(m)
+        else:
+            clean_messages.append(m.model_dump())
+
     stream = client.chat.completions.create(
         model="gpt-4o",
-        messages=messages, 
+        messages=clean_messages,
         stream=True
     )
 
