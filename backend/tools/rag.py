@@ -25,9 +25,12 @@ def build_index():
     if os.path.exists(INDEX_PATH):
         with open(INDEX_PATH, "rb") as f:
             data = pickle.load(f)
-            index = data["index"]
-            documents.extend(data["documents"])
-            doc_names.extend(data["doc_names"])
+        stored_embeddings = data["embeddings"]
+        documents.extend(data["documents"])
+        doc_names.extend(data["doc_names"])
+        dimension = stored_embeddings.shape[1]
+        index = faiss.IndexFlatL2(dimension)
+        index.add(stored_embeddings)
         _index_built = True
         return
 
@@ -47,7 +50,11 @@ def build_index():
     index.add(np.array(embeddings, dtype=np.float32))
 
     with open(INDEX_PATH, "wb") as f:
-        pickle.dump({"index": index, "documents": documents, "doc_names": doc_names}, f)
+        pickle.dump({
+            "embeddings": np.array(embeddings, dtype=np.float32),
+            "documents": documents,
+            "doc_names": doc_names
+        }, f)
 
     _index_built = True
 
@@ -61,10 +68,7 @@ def retrieve(disease_name: str, plant_type: str) -> dict:
 
     query_vector = np.array([response.data[0].embedding], dtype=np.float32)
 
-    distances = np.empty((1, 3), dtype=np.float32)
-    labels = np.empty((1, 3), dtype=np.int64)
-    index.search(query_vector, 3, distances, labels)
-    indices = labels  # rename for the rest of the function
+    distances, indices = index.search(query_vector, 3)
 
     results = []
     for i in indices[0]:
