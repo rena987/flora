@@ -4,6 +4,7 @@ import json
 import faiss
 import numpy as np
 import os 
+import time
 
 load_dotenv()
 client = OpenAI()
@@ -25,10 +26,17 @@ def build_index():
             documents.append(file.read())
         doc_names.append(name)
 
-    response = client.embeddings.create(
-        input=documents,
-        model="text-embedding-ada-002"
-    )
+    for attempt in range(3):
+        try:
+            response = client.embeddings.create(
+                input=documents,
+                model="text-embedding-ada-002"
+            )
+            break
+        except Exception as e:
+            if attempt == 2:
+                raise
+            time.sleep(2)
 
     embeddings = [item.embedding for item in response.data]
     dimension = len(embeddings[0])

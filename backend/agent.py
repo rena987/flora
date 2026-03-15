@@ -60,6 +60,7 @@ mock_tool_results = {
 }
 
 def run_agent(user_message: str, image_base64: str = None) -> dict:
+    build_index()
     original_message = user_message 
     if image_base64:
         user_message = f"[IMAGE ATTACHED - you MUST call vision_analyze immediately] {user_message}"
@@ -148,7 +149,7 @@ def run_agent(user_message: str, image_base64: str = None) -> dict:
             })
     
 def run_agent_tools(user_message: str, image_base64: str = None, history: list = None) -> dict:
-    
+    build_index()
     if history is None: 
         history = []
     
