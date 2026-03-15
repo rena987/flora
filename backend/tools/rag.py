@@ -21,8 +21,6 @@ def build_index():
     if _index_built: 
         return 
 
-    _index_built = True 
-
     kb_path = os.path.join(os.path.dirname(__file__), "..", "knowledge_base")
     for filename in os.listdir(kb_path):
         if not filename.endswith(".txt"):
@@ -50,6 +48,8 @@ def build_index():
     index = faiss.IndexFlatL2(dimension)
     vectors = np.array(embeddings, dtype=np.float32)
     index.add(vectors)
+
+    _index_built = True 
 
 def retrieve(disease_name: str, plant_type: str) -> dict:
     query = f"treatment protocol and care information for {disease_name} affecting {plant_type} plant"
