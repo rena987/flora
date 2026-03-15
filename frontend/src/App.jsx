@@ -32,19 +32,47 @@ export default function App() {
     setInput("")
     setLoading(true)
 
-    try {
-      const response = await axios.post("https://flora-production-90a7.up.railway.app/chat", {
-        message: input,
-        image_base64: image
-      })
+    const floraMsg = {
+      role: "flora",
+      content: ""
+    }
+    setMessages(prev => [...prev, floraMsg])
 
-      const floraMsg = {
-        role: "flora",
-        content: response.data.response
+    try {
+      const response = await fetch("https://flora-production-90a7.up.railway.app/chat/stream", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: input, image_base64: image})
+      })
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+
+      while (true) {
+        const { done, value } = await reader.read()
+        if (done) break 
+
+        const chunk = decoder.decode(value)
+        const lines = chunk.split("\n").filter(line => line.startsWith("data: "))
+
+        for (const line of lines) {
+          const data = JSON.parse(line.slice(6))
+          if (data.type == "token") {
+            setMessages(prev => {
+              const updated = [...prev]
+              updated[updated.length - 1] = {
+                ...updated[updated.length - 1],
+                content: updated[updated.length - 1].content + data.content
+              }
+              return updated
+            })
+          }
+          if (data.type == "done") {
+            setToolTrace(data.trace.steps)
+            setSupervisor(data.supervisor)
+          }
+        }
       }
-      setMessages(prev => [...prev, floraMsg])
-      setToolTrace(response.data.trace.steps)
-      setSupervisor(response.data.supervisor)
+
     } catch (err) {
       console.error(err)
       setMessages(prev => [...prev, {

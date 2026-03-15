@@ -147,6 +147,81 @@ def run_agent(user_message: str, image_base64: str = None) -> dict:
                 "content": json.dumps(tool_result)
             })
     
+def run_agent_tools(user_message: str, image_base64: str = None) -> dict:
+    original_message = user_message 
+    if image_base64:
+        user_message = f"[IMAGE ATTACHED - you MUST call vision_analyze immediately] {user_message}"
+    
+    messages = [
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": user_message}
+    ]
+    trace = {
+        "request_id": str(uuid.uuid4()),
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "image_present": image_base64 is not None,
+        "user_message": original_message,
+        "steps": [],
+        "supervisor": None,
+        "total_latency_ms": 0
+    }
+
+    while True:
+        response = client.chat.completions.create(
+            model="gpt-4o",
+            messages=messages,
+            tools=schemas.TOOLS,
+            tool_choice="auto"
+        )
+        
+        if not response.choices[0].message.tool_calls:
+            return messages, trace
+
+        all_tool_calls = response.choices[0].message.tool_calls
+        messages.append(response.choices[0].message)
+        for tool_call in all_tool_calls: 
+            tool_name = tool_call.function.name
+            tool_args = json.loads(tool_call.function.arguments)
+            start = time.perf_counter()
+
+            if tool_name == "validate_image":
+                tool_result = validate_image(
+                    image_base64 or ""
+                )
+            elif tool_name == "vision_analyze":
+                tool_result = analyze_image(
+                    image_base64 or "",
+                    tool_args.get("user_description", "")
+                )
+            elif tool_name == "rag_lookup":
+                tool_result = retrieve(
+                    tool_args.get("disease_name", ""),
+                    tool_args.get("plant_type", "")
+                )
+            elif tool_name == "severity_assess":
+                tool_result = assess_severity(
+                    tool_args.get("disease_name", ""),
+                    tool_args.get("confidence_score", 0.0),
+                    tool_args.get("symptoms", [])
+                )
+            else:
+                tool_result = mock_tool_results[tool_name]
+
+            latency_ms = round((time.perf_counter() - start) * 1000)
+            trace["steps"].append({
+                "tool": tool_name,
+                "inputs": tool_args,
+                "output": tool_result,
+                "latency_ms": latency_ms,
+                "status": "success"
+            })
+
+            messages.append({
+                "role": "tool",
+                "tool_call_id": tool_call.id,
+                "content": json.dumps(tool_result)
+            })
+    
 
 
 if __name__ == "__main__":
