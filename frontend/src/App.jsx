@@ -53,29 +53,37 @@ export default function App() {
 
       const reader = response.body.getReader()
       const decoder = new TextDecoder()
+      let buffer = ""
 
       while (true) {
         const { done, value } = await reader.read()
         if (done) break 
 
         const chunk = decoder.decode(value)
-        const lines = chunk.split("\n").filter(line => line.startsWith("data: "))
+        buffer += chunk 
+        const lines = buffer.split("\n")
+        buffer = lines.pop()
 
         for (const line of lines) {
-          const data = JSON.parse(line.slice(6))
-          if (data.type == "token") {
-            setMessages(prev => {
-              const updated = [...prev]
-              updated[updated.length - 1] = {
-                ...updated[updated.length - 1],
-                content: updated[updated.length - 1].content + data.content
-              }
-              return updated
-            })
-          }
-          if (data.type == "done") {
-            setToolTrace(data.trace.steps)
-            setSupervisor(data.supervisor)
+          if (!line.startsWith("data: ")) continue
+          try {
+            const data = JSON.parse(line.slice(6))
+            if (data.type === "token") {
+              setMessages(prev => {
+                const updated = [...prev]
+                updated[updated.length - 1] = {
+                  ...updated[updated.length - 1],
+                  content: updated[updated.length - 1].content + data.content
+                }
+                return updated
+              })
+            }
+            if (data.type === "done") {
+              setToolTrace(data.trace.steps)
+              setSupervisor(data.supervisor)
+            }
+          } catch (e) {
+            // incomplete JSON fragment — skip silently
           }
         }
       }
