@@ -22,7 +22,6 @@ def build_index():
     if _index_built:
         return
 
-    # Load from disk if it exists
     if os.path.exists(INDEX_PATH):
         with open(INDEX_PATH, "rb") as f:
             data = pickle.load(f)
@@ -32,7 +31,6 @@ def build_index():
         _index_built = True
         return
 
-    # Otherwise build from scratch and save
     kb_path = os.path.join(os.path.dirname(__file__), "..", "knowledge_base")
     for filename in os.listdir(kb_path):
         if not filename.endswith(".txt"):
@@ -64,6 +62,10 @@ def retrieve(disease_name: str, plant_type: str) -> dict:
     query_vector = np.array([response.data[0].embedding], dtype=np.float32)
 
     distances, indices = index.search(query_vector, k=3)
+
+    distances = np.empty((1, 3), dtype=np.float32)
+    indices = np.empty((1, 3), dtype=np.int64)
+    index.search(query_vector, 3, distances, indices)
 
     results = []
     for i in indices[0]:
