@@ -23,7 +23,7 @@ app.add_middleware(
 class ChatRequest(BaseModel):
     message: str = "I have uploaded a plant image. Please analyze it using vision_analyze to diagnose any diseases."
     image_base64: Optional[str] = None 
-    history: Optional[list] = [] # list of {role, content}
+    history: Optional[list] = None # list of {role, content}
 
 @app.post("/chat")
 async def chat(request: ChatRequest):
@@ -31,11 +31,19 @@ async def chat(request: ChatRequest):
     return result 
 
 async def generate(request: ChatRequest):
-    messages, trace = run_agent_tools(request.message, request.image_base64, request.history)
+    history = request.history or []
+    messages, trace = run_agent_tools(request.message, request.image_base64, history)
+
+    serializable_messages = []
+    for m in messages: 
+        if isinstance(m, dict):
+            serializable_messages.append(m)
+        else:
+            serializable_messages.append(m.model_dump())
 
     stream = client.chat.completions.create(
         model="gpt-4o",
-        messages=messages, 
+        messages=serializable_messages, 
         stream=True
     )
 
