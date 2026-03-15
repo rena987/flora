@@ -4,6 +4,7 @@ import json
 import faiss
 import numpy as np
 import os 
+import pickle
 import time
 
 load_dotenv()
@@ -14,42 +15,43 @@ _index_built = False
 documents = []
 doc_names = []
 
+INDEX_PATH = os.path.join(os.path.dirname(__file__), "faiss_index.pkl")
+
 def build_index():
-    global index 
-    global _index_built 
+    global index, _index_built
+    if _index_built:
+        return
 
-    if _index_built: 
-        return 
+    # Load from disk if it exists
+    if os.path.exists(INDEX_PATH):
+        with open(INDEX_PATH, "rb") as f:
+            data = pickle.load(f)
+            index = data["index"]
+            documents.extend(data["documents"])
+            doc_names.extend(data["doc_names"])
+        _index_built = True
+        return
 
+    # Otherwise build from scratch and save
     kb_path = os.path.join(os.path.dirname(__file__), "..", "knowledge_base")
     for filename in os.listdir(kb_path):
         if not filename.endswith(".txt"):
-            continue 
+            continue
         name = filename.replace(".txt", "")
-        complete_file = os.path.join(kb_path, filename)
-        with open(complete_file, "r", encoding='utf-8') as file: 
-            documents.append(file.read())
+        with open(os.path.join(kb_path, filename), "r", encoding="utf-8") as f:
+            documents.append(f.read())
         doc_names.append(name)
 
-    for attempt in range(3):
-        try:
-            response = client.embeddings.create(
-                input=documents,
-                model="text-embedding-ada-002"
-            )
-            break
-        except Exception as e:
-            if attempt == 2:
-                raise
-            time.sleep(2)
-
+    response = client.embeddings.create(input=documents, model="text-embedding-ada-002")
     embeddings = [item.embedding for item in response.data]
     dimension = len(embeddings[0])
     index = faiss.IndexFlatL2(dimension)
-    vectors = np.array(embeddings, dtype=np.float32)
-    index.add(vectors)
+    index.add(np.array(embeddings, dtype=np.float32))
 
-    _index_built = True 
+    with open(INDEX_PATH, "wb") as f:
+        pickle.dump({"index": index, "documents": documents, "doc_names": doc_names}, f)
+
+    _index_built = True
 
 def retrieve(disease_name: str, plant_type: str) -> dict:
     query = f"treatment protocol and care information for {disease_name} affecting {plant_type} plant"
