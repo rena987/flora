@@ -61,8 +61,6 @@ def retrieve(disease_name: str, plant_type: str) -> dict:
 
     query_vector = np.array([response.data[0].embedding], dtype=np.float32)
 
-    distances, indices = index.search(query_vector, k=3)
-
     distances = np.empty((1, 3), dtype=np.float32)
     indices = np.empty((1, 3), dtype=np.int64)
     index.search(query_vector, 3, distances, indices)
