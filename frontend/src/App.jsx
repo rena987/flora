@@ -44,6 +44,13 @@ export default function App() {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify({message: input, image_base64: image})
       })
+
+      if (!response.ok) {
+        const errorText = await response.text()
+        console.error("Backend error: ", response.status, errorText)
+        throw new Error(`Backend returned ${response.status}`)
+      }
+
       const reader = response.body.getReader()
       const decoder = new TextDecoder()
 
