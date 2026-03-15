@@ -10,11 +10,18 @@ load_dotenv()
 client = OpenAI()
 
 index = None 
+_index_built = False
 documents = []
 doc_names = []
 
 def build_index():
     global index 
+    global _index_built 
+
+    if _index_built: 
+        return 
+
+    _index_built = True 
 
     kb_path = os.path.join(os.path.dirname(__file__), "..", "knowledge_base")
     for filename in os.listdir(kb_path):

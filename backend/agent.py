@@ -14,7 +14,6 @@ from supervisor import review_response
 from tools.severity import assess_severity
 from tools.validate import validate_image
 
-build_index()
 load_dotenv()
 client = OpenAI()
 
