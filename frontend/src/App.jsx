@@ -27,6 +27,16 @@ export default function App() {
   const sendMessage = async () => {
     if (!input.trim() && !image) return
 
+    // 1. Build history from current messages state 
+    const history = messages
+      .filter(m => m.role === "user" || m.role === "flora")
+      .filter(m => m.content)
+      .map(m => ({
+        role: m.role === "flora" ? "assistant": "user",
+        content: m.content
+      }))
+    
+    // 2. Add user message and empty flora bubble
     const userMsg = { role: "user", content: input, image }
     setMessages(prev => [...prev, userMsg])
     setInput("")
@@ -38,11 +48,16 @@ export default function App() {
     }
     setMessages(prev => [...prev, floraMsg])
 
+    // 3. Fetch response with history included
     try {
       const response = await fetch("https://flora-production-90a7.up.railway.app/chat/stream", {
         method: "POST",
         headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({message: input, image_base64: image})
+        body: JSON.stringify({
+          message: input, 
+          image_base64: image,
+          history: history
+        })
       })
 
       if (!response.ok) {
@@ -83,7 +98,7 @@ export default function App() {
               setSupervisor(data.supervisor)
             }
           } catch (e) {
-            // incomplete JSON fragment — skip silently
+            // Skip if error
           }
         }
       }

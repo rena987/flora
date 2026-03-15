@@ -147,13 +147,18 @@ def run_agent(user_message: str, image_base64: str = None) -> dict:
                 "content": json.dumps(tool_result)
             })
     
-def run_agent_tools(user_message: str, image_base64: str = None) -> dict:
+def run_agent_tools(user_message: str, image_base64: str = None, history: list = None) -> dict:
+    
+    if history is None: 
+        history = []
+    
     original_message = user_message 
     if image_base64:
         user_message = f"[IMAGE ATTACHED - you MUST call vision_analyze immediately] {user_message}"
     
     messages = [
         {"role": "system", "content": SYSTEM_PROMPT},
+        *history,
         {"role": "user", "content": user_message}
     ]
     trace = {
