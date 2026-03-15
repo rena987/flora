@@ -8,7 +8,7 @@ import pickle
 import time
 
 load_dotenv()
-client = OpenAI()
+client = OpenAI(timeout=30.0)
 
 index = None 
 _index_built = False
@@ -61,10 +61,17 @@ def build_index():
 def retrieve(disease_name: str, plant_type: str) -> dict:
     query = f"treatment protocol and care information for {disease_name} affecting {plant_type} plant"
 
-    response = client.embeddings.create(
-        input=[query],
-        model="text-embedding-ada-002"
-    )
+    for attempt in range(3):
+        try:
+            response = client.embeddings.create(
+                input=[query],
+                model="text-embedding-ada-002"
+            )
+            break
+        except Exception as e:
+            if attempt == 2:
+                raise
+            time.sleep(1)
 
     query_vector = np.array([response.data[0].embedding], dtype=np.float32)
 
