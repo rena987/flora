@@ -96,4 +96,46 @@ async def get_trace(request_id: str):
         raise HTTPException(status_code=404, detail="Trace not found")
     return json.loads(trace_file.read_text())
 
-        
+@app.get("/metrics")
+async def get_metrics():
+    traces_dir = Path("traces")
+    if not traces_dir.exists():
+        return {"error": "No traces found"}
+
+    total = 0
+    supervisor_approved = 0
+    escalated = 0
+    confidence_scores = []
+    latencies = []
+
+    for f in traces_dir.glob("*.json"):
+        trace = json.loads(f.read_text())
+        total += 1
+
+        if trace.get("supervisor", {}).get("approved"):
+            supervisor_approved += 1
+
+        tools_called = [s["tool"] for s in trace.get("steps", [])]
+        if "escalate" in tools_called:
+            escalated += 1
+
+        for step in trace.get("steps", []):
+            if step["tool"] == "vision_analyze":
+                conf = step.get("output", {}).get("confidence")
+                if conf is not None:
+                    confidence_scores.append(conf)
+
+        if trace.get("total_latency_ms"):
+            latencies.append(trace["total_latency_ms"])
+
+    if total == 0:
+        return {"total_requests": 0}
+
+    return {
+        "total_requests": total,
+        "supervisor_approval_rate": round(supervisor_approved / total, 2),
+        "escalation_rate": round(escalated / total, 2),
+        "avg_confidence": round(sum(confidence_scores) / len(confidence_scores), 2) if confidence_scores else None,
+        "avg_latency_ms": round(sum(latencies) / len(latencies)) if latencies else None,
+        "image_requests": sum(1 for f in traces_dir.glob("*.json") if json.loads(f.read_text()).get("image_present"))
+    }
